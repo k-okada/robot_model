@@ -1434,7 +1434,8 @@ protected:
     }
 
     void _loadVertices(const std::vector<Triangle> &vertices, domGeometryRef pdomgeom) {
-            aiScene* scene = new aiScene();
+            aiScene* scene;
+            scene = (aiScene *)malloc(sizeof(aiScene));
             scene->mRootNode = new aiNode();
             scene->mRootNode->mNumMeshes = 1;
             scene->mRootNode->mMeshes  = (unsigned int*)malloc(sizeof(unsigned int));
@@ -1504,6 +1505,8 @@ protected:
             }
             _buildAiMesh(scene,scene->mRootNode,pdommesh,parray, pdomgeom->getID(), urdf::Vector3(1,1,1));
             pacc->setCount(parray->getCount());
+
+            free(scene);
     }
     void _loadMesh(std::string const& filename, domGeometryRef pdomgeom, const urdf::Vector3& scale)
     {
